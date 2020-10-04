@@ -1,0 +1,37 @@
+var status="greetings";
+var language1=".";
+var language2=".";
+var text_to_be_transalate=".";
+async function respond(inputText) {
+if (status== "greetings"){
+    Bot.send("Hi,Whatis you name");
+    status= "name";
+}
+else if(status== "name"){
+    var name = CampK12.getNouns(inputText);
+    Bot.send("Hi " + name + " nice to meet you");
+    Bot.send("send your first language to translate from?");
+    status= "language1";
+}
+else if(status== "language1"){
+    Bot.send("send you second language you want to translate into.....");
+    language1=inputText;
+    status="language2";
+}
+else if(status== "language2"){
+    Bot.send("send the text to translate");
+    language2=inputText;
+    status= ('Text_translated');
+    Bot.send("if you want to reset press r");
+}
+else if(status=="Text_translated"){
+    if(inputText=="r"){
+        status='greetings';
+    }
+    else{
+        text_to_be_transalate=inputText;
+        Bot.send(await CampK12.translate(inputText, language1, language2));
+    }
+    }
+}
+
